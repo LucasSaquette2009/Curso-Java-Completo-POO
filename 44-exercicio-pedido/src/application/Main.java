@@ -28,8 +28,7 @@ public class Main {
         System.out.println("Enter order data:");
         System.out.print("Status: ");
         OrderStatus status = OrderStatus.valueOf(sc.next());
-        Date moment = new Date();
-        Order order = new Order(moment, status, client);
+        Order order = new Order(new Date(), status, client);
 
         System.out.print("How many items to this order? ");
         int howMany = sc.nextInt();
@@ -42,15 +41,14 @@ public class Main {
             System.out.print("Product price: ");
             double productPrice = sc.nextDouble();
             Product product = new Product(productName, productPrice);
+
             System.out.print("Quantity: ");
             int productQuantity = sc.nextInt();
             OrderItem orderItem = new OrderItem(productQuantity, productPrice, product);
-            order.addItem(orderItem);
+            order.addItems(orderItem);
         }
 
         System.out.println(order);
-
-
 
         sc.close();
     }

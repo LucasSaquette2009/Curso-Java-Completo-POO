@@ -9,8 +9,10 @@ public class Order {
     private Date moment;
     private OrderStatus status;
 
+   static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
     private Client client;
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> items = new ArrayList<>();
 
     public Order() {
     }
@@ -38,7 +40,7 @@ public class Order {
     }
 
     public List<OrderItem> getOrderItems() {
-        return orderItems;
+        return items;
     }
 
     public Client getClient() {
@@ -49,18 +51,18 @@ public class Order {
         this.client = client;
     }
 
-    public void addItem(OrderItem item) {
-        orderItems.add(item);
+    public void addItems(OrderItem item) {
+        items.add(item);
     }
 
-    public void removeItem(OrderItem item) {
-        orderItems.remove(item);
+    public void removeItems(OrderItem item) {
+        items.remove(item);
     }
 
     public double total() {
         double sum = 0;
 
-        for (OrderItem c : orderItems) {
+        for (OrderItem c : items) {
             sum += c.subTotal();
         }
         return sum;
@@ -68,26 +70,19 @@ public class Order {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        SimpleDateFormat sdfClient = new SimpleDateFormat("dd/MM/yyyy");
 
         sb.append("--------------------------\n");
-        sb.append("ORDER SUMMARY\n");
+        sb.append("ORDER SUMMARY:\n");
         sb.append("Order moment: ");
         sb.append(sdf.format(moment) + "\n");
         sb.append("Order status: ");
         sb.append(status + "\n");
         sb.append("Client: ");
-        sb.append(client.getName() + " ");
-        sb.append("(" + sdfClient.format(client.getBirthDate()) + ") ");
-        sb.append(client.getEmail() + "\n");
+        sb.append(client);
 
         sb.append("Order items:\n");
-        for (OrderItem c : orderItems) {
-            sb.append(c.getProduct().getName() + ", ");
-            sb.append(String.format("%.2f", c.getPrice()) + ", Quantity: ");
-            sb.append(c.getQuantity() + ", Subtotal: $ ");
-            sb.append(String.format("%.2f", c.subTotal())+ "\n");
+        for (OrderItem item : items) {
+            sb.append(item);
         }
         sb.append("Total price: $");
         sb.append(String.format("%.2f", total()));

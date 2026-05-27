@@ -42,4 +42,11 @@ public class OrderItem {
     public Double subTotal() {
         return quantity * price;
     }
+
+    public String toString() {
+        return getProduct().getName() + ", $" +
+                String.format("%.2f",getPrice()) + ", Quantity: " +
+                getQuantity() + ", Subtotal: $" +
+                String.format("%.2f",subTotal()) + "\n";
+    }
 }
